@@ -31,29 +31,33 @@ def PrintSeparator():
 #---------------------------------
 FolderMode = 0755
 CurrentDir = os.getcwd() #get the directory where the script is run from
-FileCount = 0 #only for fancy stats
+FileCount = 0 #only for stats
 CreateCount = 0
 
-for FilePath in os.listdir(CurrentDir):
-    if os.path.isfile(FilePath):
-        TimeOfLastChange = time.localtime(os.path.getctime(FilePath))
+for FilePath in os.listdir(CurrentDir): #handle all files in current dir
+    if os.path.isfile(FilePath): #deal only with files, not folders
+        TimeOfLastChange = time.localtime(os.path.getmtime(FilePath))
         YearString = str(TimeOfLastChange.tm_year)
         MonthString = str(TimeOfLastChange.tm_mon)
+        
         if len(MonthString) == 1:
             MonthString = "0" + MonthString  # pad one digit numbers with zero
+            
         YearDirAbspath = CurrentDir + "/" + YearString
         MonthDirAbspath = YearDirAbspath + "/" + YearString + "-" + MonthString  # dir in format "2013-9"
+        
         if not os.path.isdir(YearDirAbspath):
             os.mkdir(YearDirAbspath, FolderMode)
             CreateCount += 1
         if not os.path.isdir(MonthDirAbspath):
             os.mkdir(MonthDirAbspath, FolderMode)
             CreateCount += 1
-            
-        stat = os.stat(FilePath)
+        
+        NewFileAbspath = MonthDirAbspath + "/" + os.path.basename(FilePath)
+        
+        TempAttributes = os.stat(FilePath) #save file attributes in temp var
         shutil.move(FilePath, MonthDirAbspath)
-        #todo: preserve file stats
-        #os.utime(my_new_file, (stat.st_atime, stat.st_mtime))
+        os.utime(NewFileAbspath, (TempAttributes.st_atime, TempAttributes.st_mtime)) #restore file attributes
         FileCount += 1
 
 print "%d files moved and %d directories created" % (FileCount, CreateCount)
