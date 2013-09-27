@@ -4,7 +4,7 @@
 # are created as needed, files are moved based on their date of last change.
 # (c) 2013 by Martin Demling
 # License: GPL3
-# https://github.com/0x6d64/ fixme: add github URL
+# https://github.com/0x6d64/movetoarchive
 
 import sys
 import os 
@@ -39,6 +39,9 @@ group2 = parser.add_mutually_exclusive_group()
 group2.add_argument("-v", "--verbose", help="verbose output (default)", action="store_true")
 group2.add_argument("-q", "--quiet", help="quiet output", action="store_true")
 args= parser.parse_args()
+
+if not args.month and not args.year:
+    args.month = True
     
 FolderMode = 0755
 CurrentDir = os.getcwd() #get the directory where the script is run from
