@@ -3,8 +3,9 @@
 
 Script to move files into a year/month structure, according to the time of its last change.
 ## basic usage
-Copy movetoarchive.py into a folder that is included in your system path (see this [wikipedia article](http://en.wikipedia.org/wiki/PATH_(variable)) on how to do this).
-Then call movetoarchive.py in a folder of your choice to create a year/month structure and move your files there.
+Copy movetoarchive.py into a folder that is included in your system path (see this [wikipedia article](http://en.wikipedia.org/wiki/PATH_(variable)) on how to do this). Make the script executable by excuting `chmod +x ./movetoarchive.py` in that folder.
+
+Then call `movetoarchive.py` in a folder of your choice to create a year/month structure and move your files in that structure.
 
 ## arguments
 movetoarchive accepts the following arguments:
